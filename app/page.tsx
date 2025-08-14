@@ -1,7 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import { products } from "./data/products";
-import ProductCard from "./ui/productCard";
 import { clientLogos } from "@/app/ui/clientLogo";
 import Footer from "./components/footer/Footer";
 import Testimonials from "./components/testimoni/testimonial";
@@ -63,23 +61,28 @@ export default function HomePage() {
             className="
            text-gray-700 text-justify "
           >
-            <strong>Bintang Survey</strong> adalah supplier alat konstruksi yang
-            fokus pada penyediaan alat survey tanah, GPS tracker, dan peralatan
-            pendukung proyek. Kami Menyediakan Berbagai Macam Alat Survey Baru &
-            Bekas Diantaranya :
+            Bintang Survey adalah supplier alat pengukuran yang fokus pada
+            penyediaan alat surveying instrument, survey pemetaan tanah, GPSMap,
+            peralatan konstruksi dan bangunan, peralatan pertambang, peralatan
+            kehutanan, peralatan sipil, jasa service dan kalibrasi serta
+            peralatan pendukung proyek lainnya:
           </p>
           <ol className="list-decimal list-inside pl-2">
             <li>Total Station</li>
-            <li>Theodolite</li>
+            <li>Digital Theodolite</li>
             <li>GPS Geodetik</li>
-            <li>Automatic Level / Waterpass</li>
-            <li>GPS Garmin Maps</li>
+            <li>Automatic Level</li>
+            <li>Digital Level</li>
+            <li>GPS Garmin</li>
+            <li>Alat Sipil</li>
+            <li>Drone / Lidar</li>
             <li>Sparepart / Aksesoris</li>
             <li>Jasa Kalibrasi & Service</li>
           </ol>
           <p>
-            Dari Berbagai Merk dan Type Seperti : Ruide, Topcon, Sokkia, Leica,
-            Nikon, Spectra, Hi Target, Alpha Geo, South, Foif Dll.
+            Dari Berbagai Merk dan Type Seperti : Ruide, Topcon, Sokkia, Efix,
+            CHCNAV, Leica, Nikon, Spectra, Hi Target, Trimble, Alpha Geo, South,
+            Foif Dll.
           </p>
         </div>
       </section>

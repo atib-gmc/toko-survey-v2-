@@ -2,14 +2,14 @@ import Image from "next/image";
 import Link from "next/link";
 
 // components/ProductCard.tsx
-export default function ProductCard({ product }: { product: any }) {
+export default async function ProductCard({ product }: { product: any }) {
   return (
     <Link
       href={`/products/${product.id}`}
       className="bg-white rounded-xl shadow p-6 flex flex-col items-center text-center hover:shadow-lg transition"
     >
       <Image
-        src={product.image || "https://placehold.co/600x400"}
+        src={product?.images[0] || "https://placehold.co/600x400"}
         alt={"card image"}
         className="w-16 h-16 mb-4"
         width={600}

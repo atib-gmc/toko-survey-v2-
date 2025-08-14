@@ -123,8 +123,8 @@ export default function CreateProduct() {
 
       const parseUrls = urls.join(",");
       const pgArray = `{${parseUrls}}`;
-      console.log("Uploaded URLs:", urls);
-      console.log("PostgreSQL Array Format:", pgArray);
+      // console.log("Uploaded URLs:", urls);
+      // console.log("PostgreSQL Array Format:", pgArray);
 
       // 3. Lakukan insert ke database dengan URL yang sudah lengkap
       const { data: product, error } = await supabase.from("products").insert({
@@ -148,7 +148,7 @@ export default function CreateProduct() {
       alert("Produk berhasil dibuat!");
     } catch (error) {
       console.error("Error creating product:", error);
-      alert(`Gagal membuat produk: ${error.message}`);
+      alert(`Gagal membuat produk: ${error}`);
     } finally {
       setIsSubmitting(false);
     }

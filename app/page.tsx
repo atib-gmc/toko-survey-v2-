@@ -5,6 +5,8 @@ import ProductCard from "./ui/productCard";
 import { clientLogos } from "@/app/ui/clientLogo";
 import Footer from "./components/footer/Footer";
 import Testimonials from "./components/testimoni/testimonial";
+import OurProduct from "./components/OurProduct";
+import { ClientLogo } from "@/components/ui/ClientCard";
 
 export default function HomePage() {
   return (
@@ -19,7 +21,7 @@ export default function HomePage() {
           </h1>
           <div className="flex gap-2">
             <Link
-              href={"/produk"}
+              href={"/products"}
               className="bg-red-500 px-6 py-3 font-semibold rounded-lg shadow hover:bg-red-700 transition"
             >
               Lihat Produk
@@ -83,18 +85,7 @@ export default function HomePage() {
       </section>
 
       {/* Produk Section */}
-      <section className="section-produk bg-yellow-300 md:px-[20%] py-16 px-4">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl font-bold text-left mb-10 uppercase">
-            Produk Kami
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
-            {products.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
-        </div>
-      </section>
+      <OurProduct />
       {/* Testimonial Section */}
       <Testimonials />
       {/* Galeri Proyek Section */}
@@ -111,6 +102,7 @@ export default function HomePage() {
         <div className="flex pt-11 md:pt-8 text-white flex-wrap gap-2 p-4 mt-8">
           {/* Client Logos */}
           {/* Replace with your actual client logos */}
+          {/* <ClientLogo logo={clientLogos} /> */}
           {clientLogos.map((logo, i) => (
             <Image
               key={i}

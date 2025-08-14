@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabaseClient";
 import { useRouter, useParams } from "next/navigation";
 import { useForm } from "react-hook-form";
+import { User } from "@supabase/supabase-js";
 
 type ProductFormData = {
   name: string;
@@ -14,7 +15,7 @@ type ProductFormData = {
 };
 
 export default function EditProduct() {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [imagePreview, setImagePreview] = useState<string[]>([]);

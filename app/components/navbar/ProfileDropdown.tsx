@@ -6,6 +6,7 @@ import { supabase } from "@/lib/supabaseClient";
 import { User } from "@supabase/auth-js/dist/module/lib/types";
 import { useEffect, useRef, useState } from "react";
 
+export function ProfileDropdown() {
   const [user, setUser] = useState<User | null>(null);
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);

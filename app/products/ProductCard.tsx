@@ -3,6 +3,8 @@
 import { supabase } from "@/lib/supabaseClient";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import { ProductCarousel } from "../ui/ProductCarousel";
+import Image from "next/image";
 
 interface ProductCardProps {
   name: string;
@@ -31,17 +33,7 @@ export default function ProductCard({
       onClick={() => route.push(`/products/${id}`)}
       className="bg-white border border-blue-100 rounded-lg shadow-sm p-4 flex flex-col hover:shadow-md transition-shadow min-w-[220px] max-w-xs cursor-pointer"
     >
-      {image && image.length > 0 ? (
-        <img
-          src={image[0]}
-          alt={name}
-          className="w-full h-40 object-cover rounded-md mb-3 border border-blue-50"
-        />
-      ) : (
-        <div className="w-full h-40 bg-blue-50 rounded-md flex items-center justify-center text-blue-200 mb-3 border border-blue-50">
-          <span className="text-4xl">📦</span>
-        </div>
-      )}
+      <Image src={images[0]} alt={name} width={300} height={300} />
       <h3 className="text-lg font-semibold text-gray-800 mb-1 truncate">
         {name}
       </h3>

@@ -10,6 +10,7 @@ import {
   PaginationPrevious,
   PaginationNext,
 } from "@/components/ui/pagination";
+
 export default function ProductPage() {
   const [data, setData] = useState<any[]>([]);
   const [search, setSearch] = useState("");
@@ -22,7 +23,7 @@ export default function ProductPage() {
       if (error) {
         console.error(error);
       } else {
-        console.log(data);
+        // console.log(data);
         setData(data);
         setLoading(false);
       }

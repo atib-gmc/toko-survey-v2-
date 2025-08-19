@@ -93,22 +93,6 @@ export default function ProductTable() {
     }).format(price);
   };
 
-  // useEffect(() => {
-  //   const getUser = async () => {
-  //     const {
-  //       data: { user },
-  //     } = await supabase.auth.getUser();
-  //     if (!user) {
-  //       router.push("/login");
-  //     } else {
-  //       setUser(user);
-  //     }
-  //     setLoading(false);
-  //   };
-
-  //   getUser();
-  // }, [router]);
-
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100">
@@ -134,7 +118,7 @@ export default function ProductTable() {
     );
   }
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+    <div className=" bg-gradient-to-br from-blue-50 to-indigo-100">
       {/* Header */}
 
       {/* Main Content */}
@@ -237,9 +221,6 @@ export default function ProductTable() {
                             <div className="text-sm font-medium text-gray-900">
                               {product.name}
                             </div>
-                            {/* <div className="text-sm text-gray-500 max-w-xs truncate">
-                              {product.description}
-                            </div> */}
                           </div>
                         </div>
                       </td>

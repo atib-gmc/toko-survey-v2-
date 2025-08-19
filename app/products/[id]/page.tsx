@@ -6,6 +6,7 @@ import { supabase } from "@/lib/supabaseClient";
 import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { IoMdArrowBack } from "react-icons/io";
 // import { Router, useRouter } from "next/router";
 interface Product {
   name: string;
@@ -16,6 +17,9 @@ interface Product {
 }
 
 export default function Page() {
+  const [showMore, setShowMore] = useState(false);
+  const maxChars = 100; // limit
+  const toggleShowMore = () => setShowMore(!showMore);
   const { id } = useParams();
   const [loading, setIsLoading] = useState(true);
   const router = useRouter();
@@ -27,7 +31,7 @@ export default function Page() {
       .eq("id", id)
       .single();
     setProduct(data);
-    console.log("data:", data); // Debugging line to check fetched product data
+    // console.log("data:", data); // Debugging line to check fetched product data
     setIsLoading(false);
     if (error) {
       console.log(error);
@@ -40,18 +44,12 @@ export default function Page() {
 
   const handleWhatsAppClick = () => {
     const phoneNumber = "6285155117796"; // Ganti dengan nomor WA kamu
-    const product = {
-      name: "Nama Produk",
-      price: "Rp299.000",
-      description:
-        "Deskripsi singkat tentang produk ini. Menjelaskan fitur dan manfaat utama dalam gaya bahasa yang simple dan ramah.",
-    };
 
     const message =
       `Halo, saya tertarik dengan produk berikut:\n` +
-      `Nama Produk: ${product.name}\n` +
-      `Harga: ${product.price}\n` +
-      `Deskripsi: ${product.description}\n` +
+      `Nama Produk: ${product?.name}\n` +
+      `Harga: ${product?.price}\n` +
+      // `Deskripsi: ${product.description}\n` +
       `Apakah masih tersedia?`;
 
     const encodedMessage = encodeURIComponent(message);
@@ -59,12 +57,13 @@ export default function Page() {
 
     window.open(waLink, "_blank");
   };
-  console.log("product:", product); // Debugging line to check product dataj
+  // console.log("product:", product); // Debugging line to check product dataj
+  ///loading
   if (loading) {
     return (
-      <div className="min-h-screen  flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100">
+      <div className="min-h-screen  flex  items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100">
         <div className="text-center">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-600 rounded-full mb-4 animate-spin">
+          <div className="inline-flex  items-center justify-center w-16 h-16 bg-blue-600 rounded-full mb-4 animate-spin">
             <svg
               className="w-8 h-8 text-white"
               fill="none"
@@ -87,8 +86,8 @@ export default function Page() {
 
   return (
     <section className="bg-[#f7f2ec]   text-gray-800 px-6 py-10 rounded-2xl shadow-md max-w-3xl mx-auto mt-10">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-        <div>
+      <div className="flex gap-4 flex-col md:flex-row md:items-start ">
+        <div className="min-w-xs">
           {product && product.images && product?.images.length! > 0 ? (
             <ProductCarousel images={product?.images!} />
           ) : (
@@ -102,7 +101,22 @@ export default function Page() {
         </div>
         <div className="flex flex-col space-y-4">
           <h1 className="text-3xl font-bold">{product?.name}</h1>
-          <p className="text-lg text-gray-600">{product?.description}</p>
+          <div className="text-base">
+            {showMore
+              ? product?.description
+              : product?.description.slice(0, maxChars) +
+                (product?.description.length! > maxChars ? "..." : "")}
+
+            {product?.description.length! > maxChars && (
+              <button
+                onClick={toggleShowMore}
+                className="ml-2 text-blue-500 underline"
+              >
+                {showMore ? "Show less" : "Show more"}
+              </button>
+            )}
+          </div>
+          {/* <p className="text-lg text-gray-600">{product?.description}</p> */}
           <p className="text-2xl font-semibold text-green-700">
             Rp{product?.price.toLocaleString()}
           </p>
@@ -115,8 +129,15 @@ export default function Page() {
             Beli Sekarang via WhatsApp
           </button>
         </div>
-        <button onClick={() => router.back()}>back</button>
       </div>
+
+      <button
+        className="flex items-center gap-1 mt-2 hover:gap-2 cursor-pointer"
+        onClick={() => router.back()}
+      >
+        <IoMdArrowBack />
+        <span>back</span>
+      </button>
     </section>
   );
 }

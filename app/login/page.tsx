@@ -5,6 +5,7 @@ import Logo from "../ui/Logo";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabaseClient";
+import Head from "next/head";
 
 type FormData = {
   email: string;
@@ -114,6 +115,9 @@ export default function LoginForm() {
 
   return (
     <div className="container max-w-sm px-8 mx-auto min-h-screen grid place-items-center">
+      <Head>
+        <title>Bintang survey | Login</title>
+      </Head>
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="space-y-4 w-full text-gray-300"

@@ -64,10 +64,10 @@ export default function EditProduct() {
       setImagePreview([]);
     }
   }, [watchImages]);
-  console.log(
-    "image preview:",
-    imagePreview.map((data) => data)
-  );
+  // console.log(
+  //   "image preview:",
+  //   imagePreview.map((data) => data)
+  // );
 
   const fetchProduct = async () => {
     setProductLoading(true);
@@ -93,7 +93,7 @@ export default function EditProduct() {
       //   setExistingImages(data.images || []);
       setExistingImages(data.images);
       setLoading(false);
-      console.log(data);
+      // console.log(data);
     } catch (error) {
       console.error("Error:", error);
       alert("Gagal memuat data produk");
@@ -150,8 +150,8 @@ export default function EditProduct() {
       const allurls = [...existingImages, ...urls];
       const parseUrls = allurls.join(",");
       const pgArray = `{${parseUrls}}`;
-      console.log("Uploaded URLs:", allurls);
-      console.log("PostgreSQL Array Format:", pgArray);
+      // console.log("Uploaded URLs:", allurls);
+      // console.log("PostgreSQL Array Format:", pgArray);
 
       // Update product in database
       const { error: dbError } = await supabase

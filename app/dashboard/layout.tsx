@@ -5,6 +5,7 @@ import { supabase } from "@/lib/supabaseClient";
 import { useRouter } from "next/navigation";
 import { User } from "@supabase/auth-js/dist/module/lib/types";
 import Link from "next/link";
+import Head from "next/head";
 
 export default function Dashboard({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
@@ -27,14 +28,12 @@ export default function Dashboard({ children }: { children: React.ReactNode }) {
     getUser();
   }, [router]);
 
-  const handleSignOut = async () => {
-    await supabase.auth.signOut();
-    router.push("/login");
-  };
-
   if (loading) {
     return (
       <div className="min-h-screen  flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100">
+        <Head>
+          <title>Bintang survey | Dashboard</title>
+        </Head>
         <div className="text-center">
           <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-600 rounded-full mb-4 animate-spin">
             <svg

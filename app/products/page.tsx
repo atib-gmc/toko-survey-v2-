@@ -11,7 +11,6 @@ import {
   PaginationNext,
 } from "@/components/ui/pagination";
 import SelectOption from "@/components/ui/SelectOption";
-import { set } from "jodit/esm/core/helpers";
 import { useSearchParams } from "next/navigation";
 
 export default function ProductPage() {

@@ -10,32 +10,53 @@ import {
   PaginationPrevious,
   PaginationNext,
 } from "@/components/ui/pagination";
+import SelectOption from "@/components/ui/SelectOption";
+import { set } from "jodit/esm/core/helpers";
+import { useSearchParams } from "next/navigation";
 
 export default function ProductPage() {
+  const params = useSearchParams();
+  const categoryParams = params.get("category") as string;
   const [data, setData] = useState<any[]>([]);
+  const [category, setCategory] = useState<any[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<any | null>(
+    parseInt(categoryParams) || null
+  );
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
   const pageSize = 4;
   useEffect(() => {
     async function fetchData() {
-      const { data, error } = await supabase.from("products").select("*");
-      if (error) {
+      try {
+        const [{ data: cats }, { data: prod }] = await Promise.all([
+          supabase.from("category").select("*"),
+          supabase.from("products").select("*,category(id,name,slug)"),
+        ]);
+        // console.log("Fetched categories:", cats);
+        setData(prod || []);
+        setCategory(cats || []);
+        setLoading(false);
+      } catch (error) {
         console.error(error);
-      } else {
-        // console.log(data);
-        setData(data);
         setLoading(false);
       }
     }
     fetchData();
   }, []);
+  // console.log(data);
 
-  const filtered = data.filter(
-    (item: any) =>
-      item.name?.toLowerCase().includes(search.toLowerCase()) ||
-      item.category?.toLowerCase().includes(search.toLowerCase())
-  );
+  const filtered = data.filter((item: any) => {
+    const matchesCategory = selectedCategory
+      ? item.category_id === selectedCategory
+      : true; // if no category selected, match all
+
+    const matchesSearch = item.name
+      ?.toLowerCase()
+      .includes(search.toLowerCase());
+
+    return matchesCategory && matchesSearch;
+  });
   const totalPages = Math.ceil(filtered.length / pageSize);
   const paginated = filtered.slice((page - 1) * pageSize, page * pageSize);
   //   console.log(
@@ -67,12 +88,31 @@ export default function ProductPage() {
   }
 
   return (
-    <div className="w-full bg-gradient-to-br lg:px-[20%] from-blue-50 to-indigo-100 py-10 px-6 ">
+    <div
+      className="w-full bg-gradient-to-br lg:px-[20%] from-blue-50 to-indigo-100 py-10 px-6
+      "
+    >
       <div className="max-w-7xl mx-auto">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8 gap-4">
+        <div className="flex  items-start justify-start flex-wrap flex-col-reverse sm:flex-row sm:items-center sm:justify-between mb-8 gap-4">
           <h1 className="text-3xl font-extrabold text-gray-800 tracking-tight">
             Katalog Produk
           </h1>
+          <SelectOption
+            label="Pilih Kategori"
+            customSelect={{
+              label: "All",
+              value: 0,
+            }}
+            options={category.map((cat) => ({
+              value: cat.id,
+              label: cat.name,
+            }))}
+            defaultValue={selectedCategory}
+            placeholder="Pilih kategori..."
+            onChange={(value) => {
+              setSelectedCategory(value);
+            }}
+          />
           <input
             type="text"
             placeholder="Cari produk atau kategori..."
@@ -81,7 +121,7 @@ export default function ProductPage() {
               setSearch(e.target.value);
               setPage(1);
             }}
-            className="w-full sm:w-80 px-4 py-2 border-2 border-blue-200 rounded-lg focus:outline-none focus:border-blue-500 bg-white text-gray-700 shadow-sm transition"
+            className="w-full  sm:w-80 px-4 py-2 border-2 border-blue-200 rounded-lg focus:outline-none focus:border-blue-500 bg-white text-gray-700 shadow-sm transition"
           />
         </div>
         <div className="flex justify-center lg:justify-start flex-wrap gap-8 min-h-[300px]">

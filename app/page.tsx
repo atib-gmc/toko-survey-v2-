@@ -69,7 +69,7 @@ export default function HomePage() {
         </div>
       </section>
       {/* Kontak Section */}
-      <Footer />
+      {/* <Footer /> */}
     </main>
   );
 }

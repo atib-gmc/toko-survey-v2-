@@ -1,9 +1,6 @@
 "use client";
 
-import { supabase } from "@/lib/supabaseClient";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
-import { ProductCarousel } from "../ui/ProductCarousel";
 import Image from "next/image";
 
 interface ProductCardProps {
@@ -23,26 +20,36 @@ export default function ProductCard({
   id,
   images,
 }: ProductCardProps) {
-  const [products, setProducts] = useState();
-  async function fetchProduct() {}
-  useEffect(() => {});
   const route = useRouter();
-  const image = images;
+
   return (
     <div
       onClick={() => route.push(`/products/${id}`)}
-      className="bg-white border border-blue-100 rounded-lg shadow-sm p-4 flex flex-col hover:shadow-md transition-shadow min-w-[220px] max-w-xs cursor-pointer"
+      className="bg-white border border-blue-100 rounded-lg w-full shadow-sm p-4 flex flex-col hover:shadow-md transition-shadow min-w-[220px] max-w-xs cursor-pointer"
     >
-      <Image src={images[0]} alt={name} width={300} height={300} />
-      <h3 className="text-lg font-semibold text-gray-800 mb-1 truncate">
-        {name}
-      </h3>
-      <p className="text-gray-600 text-sm mb-2 line-clamp-2">{description}</p>
-      <div className="flex items-center justify-between mt-auto">
-        <span className="text-blue-700 font-bold text-lg">
-          Rp {price.toLocaleString()}
-        </span>
-        <span className="text-xs text-gray-500">Stok: {stock}</span>
+      {/* Image stays at the top */}
+      <Image
+        src={images[0]}
+        alt={name}
+        width={300}
+        height={300}
+        className="h-[200px] w-full object-cover rounded-md"
+      />
+
+      {/* Content wrapper */}
+      <div className="flex flex-col flex-1 mt-3">
+        {/* Product name sticks above price */}
+        <h3 className="text-lg font-semibold text-gray-800 mb-2 line-clamp-2">
+          {name}
+        </h3>
+
+        {/* Push price & stock to bottom */}
+        <div className="mt-auto flex items-center justify-between">
+          <span className="text-blue-700 font-bold text-lg">
+            Rp {price.toLocaleString()}
+          </span>
+          <span className="text-xs text-gray-500">Stok: {stock}</span>
+        </div>
       </div>
     </div>
   );

@@ -2,6 +2,191 @@
 @import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
+/* globals.css or editor.css */
+/* globals.css */
+.reset {
+  /* Paragraphs */
+  p {
+    @apply  first:mt-0 mx-2 last:mb-0 text-base leading-relaxed;
+  }
+
+  /* Headings */
+  h1 {
+    @apply text-3xl font-bold mt-8 mb-4 first:mt-0 last:mb-0;
+  }
+  h2 {
+    @apply text-2xl font-semibold mt-6 mb-3 first:mt-0 last:mb-0;
+  }
+  h3 {
+    @apply text-xl font-semibold mt-4 mb-2 first:mt-0 last:mb-0;
+  }
+  h4 {
+    @apply text-lg font-semibold mt-3 mb-2 first:mt-0 last:mb-0;
+  }
+  h5 {
+    @apply text-base font-semibold mt-2 mb-1 first:mt-0 last:mb-0;
+  }
+  h6 {
+    @apply text-base font-semibold mt-2 mb-1 first:mt-0 last:mb-0;
+  }
+
+  /* Lists */
+  ul, ol {
+    @apply my-2 pl-6;
+  }
+  ul {
+    @apply list-disc;
+  }
+  ol {
+    @apply list-decimal;
+  }
+  li {
+    @apply mb-2;
+  }
+  ul ul, ul ol, ol ul, ol ol {
+    @apply my-2 pl-4;
+  }
+
+  /* Blockquote */
+  blockquote {
+    @apply border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4;
+  }
+
+  /* Horizontal rule */
+  hr {
+    @apply border-t border-gray-300 my-6;
+  }
+
+  /* Code blocks */
+  pre {
+    @apply bg-gray-100 dark:bg-gray-800 p-4 rounded-lg overflow-x-auto my-4;
+  }
+  code {
+    @apply bg-gray-100 dark:bg-gray-800 px-1 py-[2px] rounded text-sm;
+  }
+
+  /* Images */
+  img {
+    @apply my-4 max-w-full h-auto rounded;
+  }
+
+  /* Tables */
+  table {
+    @apply w-full border-collapse my-4;
+  }
+  th, td {
+    @apply border border-gray-300 px-3 py-2;
+  }
+  th {
+    @apply bg-gray-100 font-semibold;
+  }
+
+  /* Links */
+  a {
+    @apply text-blue-600 hover:underline;
+  }
+
+  /* Strong / Bold */
+  strong {
+    @apply font-semibold;
+  }
+
+  /* Emphasis / Italic */
+  em {
+    @apply italic;
+  }
+}
+
+
+#reset  {
+  /* Paragraphs */
+  p {
+    @apply my-4 first:mt-0 last:mb-0 text-base leading-relaxed;
+  }
+
+  /* Headings */
+  h1 {
+    @apply text-3xl font-bold mt-8 mb-4 first:mt-0 last:mb-0;
+  }
+  h2 {
+    @apply text-2xl font-semibold mt-6 mb-3 first:mt-0 last:mb-0;
+  }
+  h3 {
+    @apply text-xl font-semibold mt-4 mb-2 first:mt-0 last:mb-0;
+  }
+  h4 {
+    @apply text-lg font-semibold mt-3 mb-2 first:mt-0 last:mb-0;
+  }
+  h5 {
+    @apply text-base font-semibold mt-2 mb-1 first:mt-0 last:mb-0;
+  }
+  h6 {
+    @apply text-base font-semibold mt-2 mb-1 first:mt-0 last:mb-0;
+  }
+
+  /* Lists */
+  ul, ol {
+    @apply list-decimal my-4 pl-6;
+  }
+  li {
+    @apply list-disc mb-2;
+  }
+
+  /* Blockquote */
+  blockquote {
+    @apply border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4;
+  }
+
+  /* Horizontal rule */
+  hr {
+    @apply border-t border-gray-300 my-6;
+  }
+
+  /* Code blocks */
+  pre {
+    @apply bg-gray-100 dark:bg-gray-800 p-4 rounded-lg overflow-x-auto my-4;
+  }
+  code {
+    @apply bg-gray-100 dark:bg-gray-800 px-1 py-[2px] rounded text-sm;
+  }
+
+  /* Images */
+  img {
+    @apply my-4 max-w-full h-auto rounded;
+  }
+
+  /* Tables */
+  table {
+    @apply w-full border-collapse my-4;
+  }
+  th, td {
+    @apply border border-gray-300 px-3 py-2;
+  }
+  th {
+    @apply bg-gray-100 font-semibold;
+  }
+
+  /* Links */
+  a {
+    @apply text-blue-600 hover:underline;
+  }
+
+  /* Strong / Bold */
+  strong {
+    @apply font-semibold;
+  }
+
+  /* Emphasis / Italic */
+  em {
+    @apply italic;
+  }
+
+  /* Lists inside lists */
+  ul ul, ul ol, ol ul, ol ol {
+    @apply my-2 pl-4;
+  }
+}
+
 
 @theme inline {
   --color-background: var(--background);

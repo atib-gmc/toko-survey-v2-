@@ -4,15 +4,21 @@ import { ProductCarousel } from "@/app/ui/ProductCarousel";
 import { supabase } from "@/lib/supabaseClient";
 // import BackButton from "@/components/ui/BackButton";
 import Image from "next/image";
+import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { IoMdArrowBack } from "react-icons/io";
+import { IoIosArrowBack, IoMdArrowBack } from "react-icons/io";
 // import { Router, useRouter } from "next/router";
 interface Product {
   name: string;
   description: string;
   stock: number;
   images: string[];
+  category: {
+    id: number;
+    name: string;
+    slug: string;
+  };
   price: number;
 }
 
@@ -27,7 +33,7 @@ export default function Page() {
   async function fetchProduct() {
     const { data, error } = await supabase
       .from("products")
-      .select("*")
+      .select("*,category(id,name,slug)")
       .eq("id", id)
       .single();
     setProduct(data);
@@ -43,7 +49,8 @@ export default function Page() {
   }, [id]);
 
   const handleWhatsAppClick = () => {
-    const phoneNumber = "6285155117796"; // Ganti dengan nomor WA kamu
+    // const phoneNumber = "6285155117796"; // Ganti dengan nomor WA kamu
+    const phoneNumber = "6281389134993"; // Ganti dengan nomor WA kamu
 
     const message =
       `Halo, saya tertarik dengan produk berikut:\n` +
@@ -85,27 +92,40 @@ export default function Page() {
   }
 
   return (
-    <section className="bg-[#f7f2ec]   text-gray-800 px-6 py-10 rounded-2xl shadow-md max-w-3xl mx-auto mt-10">
-      <div className="flex gap-4 flex-col md:flex-row md:items-start ">
-        <div className="min-w-xs">
-          {product && product.images && product?.images.length! > 0 ? (
-            <ProductCarousel images={product?.images!} />
-          ) : (
-            <div className="w-full h-40 bg-blue-50 rounded-md flex items-center justify-center text-blue-200 mb-3 border border-blue-50">
-              <span className="text-4xl">📦</span>
-            </div>
-          )}
-          {/* {if(product?.image.length > 0 ){
+    <div className="bg-gradient-to-br md:py-6 from-blue-50 to-indigo-100">
+      <section className=" mb-8 bg-white py-8 text-gray-800 px-6 py rounded-2xl shadow-md max-w-3xl mx-auto mt-10">
+        <button
+          className="flex items-center gap-1 mt-2 -translate-y-3 hover:gap-2 cursor-pointer"
+          onClick={() => router.back()}
+        >
+          <IoIosArrowBack />
+          <span>back</span>
+        </button>
+        <div className="flex gap-4 flex-col md:flex-row md:items-start justify-evenly  ">
+          <div className="min-w-xs">
+            {product && product.images && product?.images.length! > 0 ? (
+              <ProductCarousel images={product?.images!} />
+            ) : (
+              <div className="w-full h-40 bg-blue-50 rounded-md flex items-center justify-center text-blue-200 mb-3 border border-blue-50">
+                <span className="text-4xl">📦</span>
+              </div>
+            )}
+            {/* {if(product?.image.length > 0 ){
             <ProductCarousel images={product?.image!} />
           }} */}
-        </div>
-        <div className="flex flex-col space-y-4">
-          <h1 className="text-3xl font-bold">{product?.name}</h1>
-          <div className="text-base">
-            {showMore
-              ? product?.description
-              : product?.description.slice(0, maxChars) +
-                (product?.description.length! > maxChars ? "..." : "")}
+          </div>
+          <div className="flex flex-col lg:self-center space-y-4">
+            <h1 className="text-3xl font-bold">{product?.name}</h1>
+            {/* <div className="text-base">
+            {showMore ? (
+              <div
+                className="reset prose"
+                dangerouslySetInnerHTML={{ __html: product?.description! }}
+              />
+            ) : (
+              product?.description.slice(0, maxChars) +
+              (product?.description.length! > maxChars ? "..." : "")
+            )}
 
             {product?.description.length! > maxChars && (
               <button
@@ -115,29 +135,37 @@ export default function Page() {
                 {showMore ? "Show less" : "Show more"}
               </button>
             )}
+          </div> */}
+            {/* <p className="text-lg text-gray-600">{product?.description}</p> */}
+            <p>
+              Kategori :{" "}
+              <Link
+                className="text-blue-700 hover:underline"
+                href={`/products?category=${product?.category.id}`}
+              >
+                {product?.category.name}
+              </Link>
+            </p>
+            <p className="text-2xl font-semibold text-green-700">
+              Rp{product?.price.toLocaleString()}
+            </p>
+
+            {/* Tombol WA */}
+            <button
+              onClick={handleWhatsAppClick}
+              className="bg-black  text-white px-6 py-3 rounded-full hover:bg-gray-800 transition"
+            >
+              Beli Sekarang via WhatsApp
+            </button>
           </div>
-          {/* <p className="text-lg text-gray-600">{product?.description}</p> */}
-          <p className="text-2xl font-semibold text-green-700">
-            Rp{product?.price.toLocaleString()}
-          </p>
-
-          {/* Tombol WA */}
-          <button
-            onClick={handleWhatsAppClick}
-            className="bg-black text-white px-6 py-3 rounded-full hover:bg-gray-800 transition"
-          >
-            Beli Sekarang via WhatsApp
-          </button>
         </div>
-      </div>
-
-      <button
-        className="flex items-center gap-1 mt-2 hover:gap-2 cursor-pointer"
-        onClick={() => router.back()}
-      >
-        <IoMdArrowBack />
-        <span>back</span>
-      </button>
-    </section>
+        <hr className="my-4" />
+        <p className="strong font-semibold my-2 ">Deskripsi :</p>
+        <div
+          className="reset"
+          dangerouslySetInnerHTML={{ __html: product?.description! }}
+        />
+      </section>
+    </div>
   );
 }

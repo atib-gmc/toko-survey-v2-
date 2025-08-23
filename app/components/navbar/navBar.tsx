@@ -5,7 +5,10 @@ import Profile from "./profile.";
 
 export default async function NavBar() {
   return (
-    <div className="w-full flex text-blue-700 md:px-[20%]  bg-white md:justify-between items-start md:items-center justify-start  shadow-md flex-col md:flex-row">
+    <div
+      id="top"
+      className="w-full flex text-blue-700 md:px-[20%]  md:justify-between items-start md:items-center justify-start  shadow-md flex-col md:flex-row"
+    >
       {/* <Link href="/" className="logo text-xl text-gray-900 font-bold"></Link> */}
       <ul className="flex gap-6 w-full items-center font-semibold ">
         <li>
@@ -28,7 +31,7 @@ export default async function NavBar() {
           </Link>
         </li>
       </ul>
-      <ul className="flex w-full gap-6 items-center flex-wrap lg:flex-nowrap justify-center my-3 md:my-0  md:flex font-semibold pr-2">
+      <ul className="flex w-full gap-6 ml-auto flex-wrap justify-center  lg:flex-nowrap md:justify-end items-center my-3 md:my-0  md:flex font-semibold pr-2">
         <li>
           <Link href="/#tentang">Tentang</Link>
         </li>

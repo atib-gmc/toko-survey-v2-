@@ -4,18 +4,24 @@ import React, { useState, useEffect, useRef } from "react";
 import { supabase } from "@/lib/supabaseClient";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import RichTextEditor from "@/app/richtext/RichTextEditor";
+import SelectOption from "@/components/ui/SelectOption";
 
 type ProductFormData = {
   name: string;
-  description: string;
+  // description: string;
   price: number;
   stock: number;
   images: FileList;
+  category: any;
 };
 
 export default function CreateProduct() {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [change, setChange] = useState("");
   const [imagePreview, setImagePreview] = useState<string[]>([]);
+  const [categories, setCategories] = useState<any[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<any | null>(null);
   const router = useRouter();
 
   const {
@@ -50,6 +56,17 @@ export default function CreateProduct() {
       setImagePreview([]);
     }
   }, [watchImages]);
+  useEffect(() => {
+    async function fetchCategories() {
+      const { data: cats, error } = await supabase.from("category").select("*");
+      if (error) {
+        console.error("Error fetching categories:", error);
+      } else {
+        setCategories(cats || []);
+      }
+    }
+    fetchCategories();
+  }, []);
   function deletePreviewImage(index: number) {
     setImagePreview((prev) => prev.filter((_, i) => i !== index));
     // Remove the file from the FileList in the form
@@ -132,7 +149,8 @@ export default function CreateProduct() {
         name: data.name,
         price: data.price,
         stock: data.stock,
-        description: data.description,
+        description: change,
+        category_id: data.category,
       });
 
       if (error) {
@@ -144,6 +162,7 @@ export default function CreateProduct() {
 
       // Reset form dan berikan notifikasi
       reset();
+      setChange("");
       setImagePreview([]);
       alert("Produk berhasil dibuat!");
     } catch (error) {
@@ -153,34 +172,7 @@ export default function CreateProduct() {
       setIsSubmitting(false);
     }
   };
-
-  //   if (loading) {
-  //     return (
-  //       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100">
-  //         <div className="text-center">
-  //           <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-600 rounded-full mb-4 animate-spin">
-  //             <svg
-  //               className="w-8 h-8 text-white"
-  //               fill="none"
-  //               stroke="currentColor"
-  //               viewBox="0 0 24 24"
-  //             >
-  //               <path
-  //                 strokeLinecap="round"
-  //                 strokeLinejoin="round"
-  //                 strokeWidth={2}
-  //                 d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
-  //               />
-  //             </svg>
-  //           </div>
-  //           <p className="text-gray-600">Memuat halaman...</p>
-  //         </div>
-  //       </div>
-  //     );
-  //   }
-
-  //   if (!user) return null;
-
+  console.log(watch("category"));
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
       {/* Header */}
@@ -215,7 +207,7 @@ export default function CreateProduct() {
       </header>
 
       {/* Main Content */}
-      <main className="max-w-2xl mx-auto  py-8">
+      <main className="w-full mx-auto  py-8">
         <div className="bg-white rounded-lg shadow-sm border border-blue-100 p-8">
           <div className="mb-6">
             <h2 className="text-2xl font-bold text-gray-800 mb-2">
@@ -245,30 +237,6 @@ export default function CreateProduct() {
               {errors.name && (
                 <p className="text-red-500 text-sm mt-1">
                   {errors.name.message}
-                </p>
-              )}
-            </div>
-
-            {/* Description */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Deskripsi *
-              </label>
-              <textarea
-                rows={4}
-                className={`w-full px-4 py-3 border-2 rounded-lg text-sm ${
-                  errors.description
-                    ? "border-red-500"
-                    : "border-blue-200 focus:border-blue-600"
-                } focus:outline-none transition-colors resize-none`}
-                placeholder="Deskripsikan produk Anda..."
-                {...register("description", {
-                  required: "Deskripsi produk wajib diisi",
-                })}
-              />
-              {errors.description && (
-                <p className="text-red-500 text-sm mt-1">
-                  {errors.description.message}
                 </p>
               )}
             </div>
@@ -326,9 +294,18 @@ export default function CreateProduct() {
                           if (img.length > 3) {
                             return "Maksimal 3 gambar yang dapat diupload";
                           }
+                          const allowedTypes = [
+                            "image/jpeg",
+                            "image/png",
+                            "image/webp",
+                            "image/gif",
+                          ];
                           for (const file of img) {
                             if (file.size > 1024 * 1024) {
                               return "Ukuran gambar maksimal 1MB";
+                            }
+                            if (!allowedTypes.includes(file.type)) {
+                              return "Format gambar tidak valid. Gunakan JPG, PNG, WEBP, atau GIF";
                             }
                           }
                           return true;
@@ -427,6 +404,61 @@ export default function CreateProduct() {
               )}
             </div>
 
+            {/* Category */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Kategori *
+              </label>
+              <select
+                id="category"
+                {...register("category")}
+                className="border rounded px-3 py-2 w-[220px]  "
+              >
+                <option value="">All Categories</option>
+                {categories.map((cat) => (
+                  <option key={cat.id} value={cat.id}>
+                    {cat.name}
+                  </option>
+                ))}
+              </select>
+
+              {/* <SelectOption
+                label="Pilih Kategori"
+                options={categories.map((cat) => ({
+                  value: cat.id,
+                  label: cat.name,
+                }))}
+                defaultValue={selectedCategory}
+                placeholder="Pilih kategori..."
+                onChange={(value) => {
+                  setSelectedCategory(value);
+                }}
+              /> */}
+            </div>
+            {/* Description */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Deskripsi *
+              </label>
+              {/* <textarea
+                rows={4}
+                className={`w-full px-4 py-3 border-2 rounded-lg text-sm ${
+                  errors.description
+                    ? "border-red-500"
+                    : "border-blue-200 focus:border-blue-600"
+                } focus:outline-none transition-colors resize-none`}
+                placeholder="Deskripsikan produk Anda..."
+                {...register("description", {
+                  required: "Deskripsi produk wajib diisi",
+                })}
+              /> */}
+              <RichTextEditor value={change} onchange={setChange} />
+              {change && change.length < 5 && (
+                <p className="text-red-500 text-sm mt-1">
+                  Deskripsi tidak boleh kosong
+                </p>
+              )}
+            </div>
             {/* Submit Buttons */}
             <div className="flex space-x-4 pt-6">
               <button

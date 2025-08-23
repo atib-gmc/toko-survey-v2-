@@ -12,6 +12,7 @@ type ProductFormData = {
   price: number;
   stock: number;
   images: FileList;
+  category: any;
 };
 
 export default function EditProduct() {
@@ -21,6 +22,7 @@ export default function EditProduct() {
   const [imagePreview, setImagePreview] = useState<string[]>([]);
   const [existingImages, setExistingImages] = useState<string[]>([]);
   const [productLoading, setProductLoading] = useState(true);
+  const [categories, setCategories] = useState<any[]>([]);
   const router = useRouter();
   const params = useParams();
   const productId = params.id;
@@ -35,24 +37,24 @@ export default function EditProduct() {
 
   const watchImages = watch("images");
 
-  useEffect(() => {
-    const getUser = async () => {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      if (!user) {
-        router.push("/login");
-      } else {
-        setUser(user);
-      }
-      setLoading(false);
-    };
+  // useEffect(() => {
+  //   const getUser = async () => {
+  //     const {
+  //       data: { user },
+  //     } = await supabase.auth.getUser();
+  //     if (!user) {
+  //       router.push("/login");
+  //     } else {
+  //       setUser(user);
+  //     }
+  //     setLoading(false);
+  //   };
 
-    getUser();
-  }, [router]);
+  //   getUser();
+  // }, [router]);
 
   useEffect(() => {
-    if (user && productId) {
+    if (productId) {
       fetchProduct();
     }
   }, [user, productId]);
@@ -87,7 +89,10 @@ export default function EditProduct() {
         .select("*")
         .eq("id", productId)
         .single();
-
+      const { data: prod, error: err } = await supabase
+        .from("category")
+        .select("*");
+      setCategories(prod || []);
       if (error) {
         console.error("Error fetching product:", error);
         alert("Produk tidak ditemukan");
@@ -395,7 +400,37 @@ export default function EditProduct() {
                 )}
               </div>
             </div>
+            {/* Category */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Kategori *
+              </label>
+              <select
+                id="category"
+                {...register("category")}
+                className="border rounded px-3 py-2 w-[220px]  "
+              >
+                <option value="">All Categories</option>
+                {categories.map((cat) => (
+                  <option key={cat.id} value={cat.id}>
+                    {cat.name}
+                  </option>
+                ))}
+              </select>
 
+              {/* <SelectOption
+                label="Pilih Kategori"
+                options={categories.map((cat) => ({
+                  value: cat.id,
+                  label: cat.name,
+                }))}
+                defaultValue={selectedCategory}
+                placeholder="Pilih kategori..."
+                onChange={(value) => {
+                  setSelectedCategory(value);
+                }}
+              /> */}
+            </div>
             {/* Price and Stock Row */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>

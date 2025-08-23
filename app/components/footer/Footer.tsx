@@ -1,5 +1,5 @@
-import Logo from "@/app/ui/Logo";
 import Image from "next/image";
+import Link from "next/link";
 import { FaInstagram, FaWhatsapp, FaEnvelope } from "react-icons/fa";
 
 export default function Footer() {
@@ -8,21 +8,35 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:justify-between space-y-8 md:space-y-0">
         {/* Left: Menu + Socials */}
         <div className="space-y-6">
-          <div className="space-y-2">
-            <p className="font-semibold">Beranda</p>
-            <p className="font-semibold">Produk</p>
-            <p className="font-semibold">Tentang</p>
+          <div className="space-y-2 flex flex-col">
+            <Link href={"#top"} className="font-semibold">
+              Beranda
+            </Link>
+            <Link href={"/products"} className="font-semibold">
+              Produk
+            </Link>
+            <Link href={"#tentang"} className="font-semibold">
+              Tentang
+            </Link>
           </div>
 
           <div className="space-x-4 flex items-center pt-2">
-            <a href="#" className="hover:text-gray-300">
+            <a
+              href="https://www.instagram.com/bintangsurvey?igsh=MWgwNnFtODQ3Ym40OQ=="
+              target="_blank"
+              className="hover:text-gray-300"
+            >
               <FaInstagram size={20} />
             </a>
-            <a href="#" className="hover:text-gray-300">
+            <a
+              href="https://wa.me/6281389134993"
+              className="hover:text-gray-300"
+              target="_blank"
+            >
               <FaWhatsapp size={20} />
             </a>
             <a
-              href="mailto:someone@example.com"
+              href="mailto:tokosurveyor@gmail.com"
               className="hover:text-gray-300"
             >
               <FaEnvelope size={20} />

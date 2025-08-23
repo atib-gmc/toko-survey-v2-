@@ -45,16 +45,6 @@ export default async function TentangKami() {
                 <a href={`/products/${item.id}`}>{item.name}</a>
               </li>
             ))}
-          {/* <li>Total Station</li>
-          <li>Digital Theodolite</li>
-          <li>GPS Geodetik</li>
-          <li>Automatic Level</li>
-          <li>Digital Level</li>
-          <li>GPS Garmin</li>
-          <li>Alat Sipil</li>
-          <li>Drone / Lidar</li>
-          <li>Sparepart / Aksesoris</li>
-          <li>Jasa Kalibrasi & Service</li> */}
         </ol>
         <p>
           Dari Berbagai Merk dan Type Seperti : Ruide, Topcon, Sokkia, Efix,

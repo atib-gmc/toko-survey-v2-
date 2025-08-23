@@ -5,13 +5,15 @@ import { supabase } from "@/lib/supabaseClient";
 import { useRouter, useParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import Image from "next/image";
+import RichTextEditor from "@/app/richtext/RichTextEditor";
 
 type ProductFormData = {
   name: string;
-  description: string;
+  // description: string;
   price: number;
   stock: number;
   images: FileList;
+  category: any;
 };
 
 export default function EditProduct() {
@@ -21,6 +23,8 @@ export default function EditProduct() {
   const [existingImages, setExistingImages] = useState<string[]>([]);
   const [productLoading, setProductLoading] = useState(true);
   const [deletedImages, setDeletedImages] = useState<string[]>([]);
+  const [categories, setCategories] = useState<any[]>([]);
+  const [change, setChange] = useState<string>("");
   const router = useRouter();
   const params = useParams();
   const productId = params.id;
@@ -77,7 +81,9 @@ export default function EditProduct() {
         .select("*")
         .eq("id", productId)
         .single();
-
+      const { data: cat, error: catError } = await supabase
+        .from("category")
+        .select("*");
       if (error) {
         console.error("Error fetching product:", error);
         alert("Produk tidak ditemukan");
@@ -87,7 +93,10 @@ export default function EditProduct() {
 
       // Set form values
       setValue("name", data.name);
-      setValue("description", data.description);
+      setCategories(cat || []);
+      setValue("category", data.category_id);
+      // setValue("description", data.description);
+      setChange(data.description);
       setValue("price", data.price);
       setValue("stock", data.stock);
       //   setExistingImages(data.images || []);
@@ -158,10 +167,11 @@ export default function EditProduct() {
         .from("products")
         .update({
           name: data.name,
-          description: data.description,
+          description: change,
           price: data.price,
           stock: data.stock,
           images: allurls,
+          category_id: data.category,
         })
         .eq("id", productId);
 
@@ -229,7 +239,7 @@ export default function EditProduct() {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
       {/* Header */}
       <header className="bg-white shadow-sm border-b border-blue-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="w-full mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-4">
               <button
@@ -259,7 +269,7 @@ export default function EditProduct() {
       </header>
 
       {/* Main Content */}
-      <main className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main className="w-full mx-auto px-4 lg:px-0  py-8">
         <div className="bg-white rounded-lg shadow-sm border border-blue-100 p-8">
           <div className="mb-6">
             <h2 className="text-2xl font-bold text-gray-800 mb-2">
@@ -294,7 +304,7 @@ export default function EditProduct() {
             </div>
 
             {/* Description */}
-            <div>
+            {/* <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Deskripsi *
               </label>
@@ -315,7 +325,7 @@ export default function EditProduct() {
                   {errors.description.message}
                 </p>
               )}
-            </div>
+            </div> */}
 
             {/* Existing Images */}
             {existingImages.length > 0 && (
@@ -488,7 +498,51 @@ export default function EditProduct() {
                 )}
               </div>
             </div>
+            {/* Category */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Kategori *
+              </label>
+              <select
+                id="category"
+                {...register("category")}
+                className="border rounded px-3 py-2 w-[220px]  "
+              >
+                <option value="" disabled>
+                  pilih kategori
+                </option>
+                {categories.map((cat) => (
+                  <option key={cat.id} value={cat.id}>
+                    {cat.name}
+                  </option>
+                ))}
+              </select>
 
+              {/* <SelectOption
+                label="Pilih Kategori"
+                options={categories.map((cat) => ({
+                  value: cat.id,
+                  label: cat.name,
+                }))}
+                defaultValue={selectedCategory}
+                placeholder="Pilih kategori..."
+                onChange={(value) => {
+                  setSelectedCategory(value);
+                }}
+              /> */}
+            </div>
+            {/* deskripsi */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Deskripsi *
+              </label>
+              <RichTextEditor value={change} onchange={setChange} />
+              {change && change.length < 5 && (
+                <p className="text-red-500 text-sm mt-1">
+                  Deskripsi produk wajib diisi
+                </p>
+              )}
+            </div>
             {/* Submit Buttons */}
             <div className="flex space-x-4 pt-6">
               <button

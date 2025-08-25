@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 // components/ProductCard.tsx
-export default async function ProductCard({ product }: { product: any }) {
+export default function ProductCard({ product }: { product: any }) {
   return (
     <Link
       href={`/products/${product.id}`}

@@ -38,7 +38,7 @@ export default function SelectOption({
         <SelectGroup>
           {label && <SelectLabel>{label}</SelectLabel>}
           {customSelect && (
-            <SelectItem value={customSelect.value}>
+            <SelectItem defaultChecked value={customSelect.value}>
               {customSelect.label}
             </SelectItem>
           )}

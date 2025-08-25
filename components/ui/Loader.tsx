@@ -2,7 +2,7 @@ import React from "react";
 
 export default function Loader() {
   return (
-    <div className="min-h-screen  flex items-center lg:px-[20%]  justify-center bg-gradient-to-br from-blue-50 to-indigo-100">
+    <div className="min-h-screen flex items-center lg:px-[20%]  justify-center bg-gradient-to-br from-blue-50 to-indigo-100">
       <div className="text-center">
         <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-600 rounded-full mb-4 animate-spin">
           <svg

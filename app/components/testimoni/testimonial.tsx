@@ -2,18 +2,17 @@ import { FaStar } from "react-icons/fa";
 
 const testimonials = [
   {
-    name: "Budi Santoso",
-    review: "Beli kebutuhan konstruksi disini\nMurah,satset jadi gedung",
+    name: "Thamrin",
+    review: "Jangan ragu pokonya,seller juga gercep buat followup pesanan kita",
   },
   {
-    name: "ari prasetyo",
-    review:
-      "Mantep sih website responsiv\ntampilannya simpe;tapi tetep enak dipandangnya",
+    name: "Budi Santoso",
+    review: "Barangnya oke banget,sesuai dengan deskripsinya,pokonya mantepp!!",
   },
   {
     name: "Dewi Lestari",
     review:
-      "Kayaknya bakal 999x order lagi sih disini\nsoalnya murah,ramah,dan cepat juga",
+      "Sellernya ramah,enak diajak ngobrol,diskusiin kebutuhan langsung seller bantu penuhin",
   },
 ];
 

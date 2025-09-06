@@ -10,7 +10,7 @@ import SelectOption from "@/components/ui/SelectOption";
 type ProductFormData = {
   name: string;
   // description: string;
-  price: any;
+  price: string;
   stock: number;
   images: FileList;
   category: string;
@@ -302,7 +302,7 @@ export default function CreateProduct() {
                           ];
                           for (const file of img) {
                             if (file.size > 1024 * 1024 * 2) {
-                              return "Ukuran gambar maksimal 1MB";
+                              return "Ukuran gambar maksimal 2MB";
                             }
                             if (!allowedTypes.includes(file.type)) {
                               return "Format gambar tidak valid. Gunakan JPG, PNG, WEBP, atau GIF";

@@ -43,7 +43,7 @@ export default async function TentangKami() {
           {data &&
             data.map((item) => (
               <li key={item.id} className="hover:underline">
-                <a href={`/products/${item.id}`}>{item.name}</a>
+                <a href={`/products?category=${item.id}`}>{item.name}</a>
               </li>
             ))}
 

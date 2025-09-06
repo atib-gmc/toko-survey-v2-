@@ -20,6 +20,7 @@ export function ClientLogo({ logo }: { logo: string[] }) {
               <Card className="w-20 h-20  items-center">
                 <CardContent className="items-center mx-auto justify-center p-6">
                   <Image
+                    quality={70}
                     key={item}
                     src={`/${item}`}
                     alt="Client Logo"

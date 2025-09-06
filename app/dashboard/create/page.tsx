@@ -10,10 +10,10 @@ import SelectOption from "@/components/ui/SelectOption";
 type ProductFormData = {
   name: string;
   // description: string;
-  price: number;
+  price: any;
   stock: number;
   images: FileList;
-  category: any;
+  category: string;
 };
 
 export default function CreateProduct() {
@@ -278,7 +278,7 @@ export default function CreateProduct() {
                         atau drag & drop
                       </p>
                       <p className="text-xs text-blue-500">
-                        PNG, JPG, JPEG (Max. 1MB per file)
+                        PNG, JPG, JPEG (Max. 2MB per file)
                       </p>
                     </div>
                     <input
@@ -301,7 +301,7 @@ export default function CreateProduct() {
                             "image/gif",
                           ];
                           for (const file of img) {
-                            if (file.size > 1024 * 1024) {
+                            if (file.size > 1024 * 1024 * 2) {
                               return "Ukuran gambar maksimal 1MB";
                             }
                             if (!allowedTypes.includes(file.type)) {
@@ -358,7 +358,7 @@ export default function CreateProduct() {
                   Harga (Rp) *
                 </label>
                 <input
-                  type="number"
+                  // type="number"
                   className={`w-full px-4 py-3 border-2 rounded-lg text-sm ${
                     errors.price
                       ? "border-red-500"
@@ -372,7 +372,7 @@ export default function CreateProduct() {
                 />
                 {errors.price && (
                   <p className="text-red-500 text-sm mt-1">
-                    {errors.price.message}
+                    {errors?.price?.message!}
                   </p>
                 )}
               </div>

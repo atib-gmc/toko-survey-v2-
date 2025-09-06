@@ -12,6 +12,7 @@ export default function Logo({
   return (
     <div className={`flex items-center ${className}`}>
       <Image
+        quality={70}
         src="/logo.png"
         alt="Logo Maxima"
         width={width || 70}

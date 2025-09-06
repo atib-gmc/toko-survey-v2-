@@ -19,6 +19,7 @@ export function ProductCarousel({ images }: { images: string[] }) {
                 <CardContent className="flex aspect-square max-h-xs overflow-hidden items-center justify-center p-6">
                   <Image
                     src={image}
+                    quality={70}
                     alt={`Image ${index + 1}`}
                     objectFit="cover"
                     height={300}

@@ -3,7 +3,7 @@ import Image from "next/image";
 import React from "react";
 
 export default async function TentangKami() {
-  const { data } = await supabase.from("products").select("*");
+  const { data } = await supabase.from("category").select("*");
   return (
     <section
       id="tentang"
@@ -15,6 +15,7 @@ export default async function TentangKami() {
           alt="Logo Maxima"
           width={150}
           height={150}
+          quality={80}
           className="inline-block mr-2 "
         />
         <div className="name flex flex-col ">
@@ -40,11 +41,19 @@ export default async function TentangKami() {
         </p>
         <ol className="list-decimal list-inside pl-2">
           {data &&
-            data.slice(0, 5).map((item) => (
+            data.map((item) => (
               <li key={item.id} className="hover:underline">
                 <a href={`/products/${item.id}`}>{item.name}</a>
               </li>
             ))}
+
+          <a
+            href="https://wa.me/6281389134993?text=Halo%2C%20saya%20ingin%20tanya%20tentang%20jasa%20kalibrasi%20%26%20service%20alat"
+            target="_blank"
+            className="hover:underline"
+          >
+            {JSON.stringify(data?.length! + 1)}. Jasa Kalibrrasi & Servis
+          </a>
         </ol>
         <p>
           Dari Berbagai Merk dan Type Seperti : Ruide, Topcon, Sokkia, Efix,

@@ -33,6 +33,7 @@ export default function ProductCard({
         alt={name}
         width={300}
         height={300}
+        quality={70}
         className="h-[200px] w-full object-cover rounded-md"
       />
 

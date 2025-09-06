@@ -62,6 +62,7 @@ export default function HomePage() {
               src={`/${logo}`}
               alt="Client Logo"
               width={138}
+              quality={70}
               height={100}
               className="w-24 h-24 object-contain mx-auto my-4 invert brightness-0"
             />

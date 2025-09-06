@@ -10,7 +10,7 @@ import RichTextEditor from "@/app/richtext/RichTextEditor";
 type ProductFormData = {
   name: string;
   // description: string;
-  price: number;
+  price: string;
   stock: number;
   images: FileList;
   category: any;
@@ -296,6 +296,7 @@ export default function EditProduct() {
                 placeholder="Masukkan nama produk"
                 {...register("name", { required: "Nama produk wajib diisi" })}
               />
+
               {errors.name && (
                 <p className="text-red-500 text-sm mt-1">
                   {errors.name.message}
@@ -340,6 +341,7 @@ export default function EditProduct() {
                         width={240}
                         height={320}
                         src={imageUrl}
+                        quality={70}
                         alt={`Current ${index + 1}`}
                         className="w-full h-24 object-cover rounded-lg border border-blue-200"
                       />
@@ -452,7 +454,7 @@ export default function EditProduct() {
                   Harga (Rp) *
                 </label>
                 <input
-                  type="number"
+                  // type="number"
                   min="0"
                   step="1000"
                   className={`w-full px-4 py-3 border-2 rounded-lg text-sm ${

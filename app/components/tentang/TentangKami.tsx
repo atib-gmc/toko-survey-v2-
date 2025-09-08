@@ -52,7 +52,7 @@ export default async function TentangKami() {
             target="_blank"
             className="hover:underline"
           >
-            {JSON.stringify(data?.length! + 1)}. Jasa Kalibrrasi & Servis
+            {JSON.stringify(data?.length! + 1)}. Jasa Kalibrasi & Servis
           </a>
         </ol>
         <p>

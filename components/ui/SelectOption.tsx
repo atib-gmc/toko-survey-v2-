@@ -1,6 +1,5 @@
 "use client";
 import * as React from "react";
-
 import {
   Select,
   SelectContent,
@@ -10,7 +9,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-
 export default function SelectOption({
   label = "Select Option",
   options = [],
@@ -24,31 +22,30 @@ export default function SelectOption({
   placeholder?: string;
   onChange?: (value: string) => void;
   defaultValue?: any | null;
-  customSelect?: {
-    label: string;
-    value: any;
-  };
+  customSelect?: { label: string; value: any };
 }) {
   return (
-    <Select defaultValue={defaultValue} onValueChange={onChange}>
+    <Select onValueChange={onChange} defaultValue={defaultValue || ""}>
       <SelectTrigger className="w-[220px]">
-        <SelectValue placeholder={placeholder} />
-      </SelectTrigger>
+        <SelectValue className="text-black" placeholder={"select category"} />{" "}
+      </SelectTrigger>{" "}
       <SelectContent>
         <SelectGroup>
-          {label && <SelectLabel>{label}</SelectLabel>}
+          {label && <SelectLabel>{label || "pilih kategori"}</SelectLabel>}{" "}
           {customSelect && (
             <SelectItem defaultChecked value={customSelect.value}>
-              {customSelect.label}
+              {" "}
+              {customSelect.label}{" "}
             </SelectItem>
-          )}
+          )}{" "}
           {options.map((item) => (
             <SelectItem key={item.value} value={item.value}>
-              {item.label}
+              {" "}
+              {item.label}{" "}
             </SelectItem>
-          ))}
-        </SelectGroup>
-      </SelectContent>
+          ))}{" "}
+        </SelectGroup>{" "}
+      </SelectContent>{" "}
     </Select>
   );
 }

@@ -56,6 +56,9 @@ export default async function TentangKami() {
           </a>
         </ol>
         <p>
+          Pembayaran: <br /> BCA / 5421019798 Wawan Setiawan
+        </p>
+        <p>
           Dari Berbagai Merk dan Type Seperti : Ruide, Topcon, Sokkia, Efix,
           CHCNAV, Leica, Nikon, Spectra, Hi Target, Trimble, Alpha Geo, South,
           Foif Dll.
